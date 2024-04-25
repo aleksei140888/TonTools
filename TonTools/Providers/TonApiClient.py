@@ -90,7 +90,7 @@ class TonApiClient:
             response = await session.get(url=url, headers=self.headers)
             response = await process_response(response)
             if 'owner' in response:
-                response['owner']['address'] = self._process_address(response['owner']['address'])
+                response['owner'] = self._process_address(response['owner']['address'])
             return NftCollection(response, self)
 
     async def get_collection_items(self, collection: NftCollection, limit: int = 10**9, limit_per_one_request=1000):
