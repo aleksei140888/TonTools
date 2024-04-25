@@ -3,20 +3,14 @@ import unicodedata
 from base64 import b64decode
 import aiohttp
 
-import asyncio
 from tonsdk.boc import Cell
-from tonsdk.utils import Address, bytes_to_b64str, b64str_to_bytes
-
-from ton.account import Account
-from ton import TonlibClient
-from ton.utils.cell import read_address
 
 
-def is_hex(str):
+def is_hex(s: str):
     try:
-        int(str, 16)
+        int(s, 16)
         return True
-    except:
+    except ValueError:
         return False
 
 

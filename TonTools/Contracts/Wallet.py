@@ -1,10 +1,11 @@
 import tonsdk
-from tonsdk.utils import Address, InvalidAddressError
+from tonsdk.utils import Address
 from tonsdk.contract.wallet import WalletVersionEnum, Wallets
 from ..Contracts.Contract import Contract
 from tonsdk.utils import bytes_to_b64str
 import tonsdk.contract.token.ft
 from tonsdk.contract.token.nft import NFTItem
+
 
 class WalletError(BaseException):
     pass

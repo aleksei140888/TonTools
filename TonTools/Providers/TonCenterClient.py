@@ -223,7 +223,7 @@ class TonCenterClient:
             items = []
             for p in range(ceil(collection.next_item_index / limit_per_one_request)):
                 items += await asyncio.gather(*[
-                    self.run_get_method(address=collection.address, method='get_nft_address_by_index',stack=[['num', i]]) for i in range(p * limit_per_one_request, min(collection.next_item_index, limit_per_one_request * (p + 1)))])
+                    self.run_get_method(address=collection.address, method='get_nft_address_by_index', stack=[['num', i]]) for i in range(p * limit_per_one_request, min(collection.next_item_index, limit_per_one_request * (p + 1)))])
 
         result = []
         for data in items:
@@ -331,7 +331,7 @@ class TonCenterClient:
         return jetton_wallet_address
 
     async def get_jetton_wallet(self, jetton_wallet_address: str):
-        data = await self.run_get_method(address=jetton_wallet_address, method='get_wallet_data',stack=[])
+        data = await self.run_get_method(address=jetton_wallet_address, method='get_wallet_data', stack=[])
         wallet = {
             'address': jetton_wallet_address,
             'balance': int(data[0][1], 16),

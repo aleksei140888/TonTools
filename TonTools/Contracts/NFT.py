@@ -1,7 +1,6 @@
 import json
 
-from tonsdk.utils import Address, InvalidAddressError
-from ..Contracts.Contract import Contract
+from TonTools.Contracts.Contract import Contract
 
 
 class NftCollectionError(BaseException):
