@@ -7,6 +7,7 @@ from ..Contracts.NFT import NftItem, NftCollection
 from ..Contracts.Contract import Transaction
 from ..Contracts.Wallet import Wallet
 from ..Contracts.Jetton import Jetton
+from ..Enums.Address import AddressForm
 
 
 class TonApiError(BaseException):
@@ -27,7 +28,7 @@ async def process_response(response: aiohttp.ClientResponse):
 class TonApiClient:
     def __init__(self,
                  key: str = None,  # api key from tonapi
-                 addresses_form='user_friendly',  # addresses_form could be 'raw' or 'user_friendly'
+                 addresses_form: str = AddressForm.USER_FRIENDLY,
                  testnet=False
                  ):
         self.form = addresses_form
@@ -45,9 +46,9 @@ class TonApiClient:
             self.headers = {}
 
     def _process_address(self, address):
-        if self.form == 'raw':
+        if self.form == AddressForm.RAW:
             return Address(address).to_string(is_user_friendly=False)
-        elif self.form == 'user_friendly':
+        elif self.form == AddressForm.USER_FRIENDLY:
             if self.testnet:
                 return Address(address).to_string(True, True, True, True)
             else:

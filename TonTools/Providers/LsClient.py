@@ -12,6 +12,8 @@ from ..Contracts.NFT import NftItem, NftCollection
 from ..Contracts.Contract import Transaction
 from ..Contracts.Wallet import Wallet
 from ..Contracts.Jetton import Jetton, JettonWallet
+from ..Enums.Address import AddressForm
+from ..Enums.Exception import TVMExitCode
 from .utils import markets_adresses, get, process_jetton_data
 
 
@@ -42,16 +44,16 @@ class LsClient(TonlibClient):
                  workchain_id=0,
                  verbosity_level=0,
                  default_timeout=10,
-                 addresses_form='user_friendly'  # or raw
+                 addresses_form: str = AddressForm.USER_FRIENDLY
                  ):
         super().__init__(ls_index, config, keystore, workchain_id, verbosity_level, default_timeout)
         TonlibClient.enable_unaudited_binaries()
         self.form = addresses_form
 
     def _process_address(self, address):
-        if self.form == 'user_friendly':
+        if self.form == AddressForm.USER_FRIENDLY:
             return Address(address).to_string(True, True, True)
-        elif self.form == 'raw':
+        elif self.form == AddressForm.RAW:
             return Address(address).to_string(is_user_friendly=False)
 
     async def run_get_method(self, method: str, address: str, stack: list):

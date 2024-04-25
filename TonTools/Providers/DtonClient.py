@@ -11,6 +11,7 @@ from .utils import get, markets_adresses, is_hex
 from ..Contracts.NFT import NftItem, NftCollection
 from ..Contracts.Contract import Transaction
 from ..Contracts.Jetton import Jetton, JettonWallet
+from ..Enums.Address import AddressForm
 
 
 class DtonError(BaseException):
@@ -31,7 +32,7 @@ async def process_response(response: aiohttp.ClientResponse):
 class DtonClient:
     def __init__(self,
                  key: str = None,  # dton api key
-                 addresses_form='user_friendly',  # addresses_form could be 'raw' or 'user_friendly'
+                 addresses_form: str = AddressForm.USER_FRIENDLY,
                  testnet=False,
                  private_graphql=False
                  ):
@@ -55,9 +56,9 @@ class DtonClient:
             self.cookies = {}
 
     def _process_address(self, address):
-        if self.form == 'raw':
+        if self.form == AddressForm.RAW:
             return Address(address).to_string(is_user_friendly=False)
-        elif self.form == 'user_friendly':
+        elif self.form == AddressForm.USER_FRIENDLY:
             if self.testnet:
                 return Address(address).to_string(True, True, True, True)
             else:
