@@ -149,7 +149,7 @@ class TonApiClient:
             response = await session.get(url=url, headers=self.headers)
             response = await process_response(response)
             result = response['metadata']
-            result['description'] = unicodedata.normalize("NFKD", result['description'])
+            result['description'] = unicodedata.normalize("NFKD", result['description']) if 'description' in result else ''
             result['address'] = self._process_address(result['address'])
             result['supply'] = response['total_supply']
             return Jetton(result, self)
