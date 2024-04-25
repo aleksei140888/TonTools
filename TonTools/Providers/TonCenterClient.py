@@ -27,7 +27,7 @@ class GetMethodError(TonCenterClientError):
 async def process_response(response: aiohttp.ClientResponse):
     try:
         response_dict = await response.json()
-    except:
+    except Exception:
         raise TonCenterClientError(f'Failed to parse response: {response.text}')
     if response.status != 200:
         raise TonCenterClientError(f'TonCenter failed with error: {response_dict["error"]}')
@@ -36,7 +36,6 @@ async def process_response(response: aiohttp.ClientResponse):
 
 
 class TonCenterClient:
-
     def __init__(self,
                  key: str = None,
                  addresses_form: str = AddressForm.USER_FRIENDLY,

@@ -17,7 +17,7 @@ class TonApiError(BaseException):
 async def process_response(response: aiohttp.ClientResponse):
     try:
         response_dict = await response.json()
-    except:
+    except Exception:
         raise TonApiError(f'Failed to parse response: {response.text}')
     if response.status != 200:
         raise TonApiError(f'TonApi failed with error: {response_dict}')
