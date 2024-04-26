@@ -13,7 +13,7 @@ requirements = [
 setup(
     name='TonTools',
     version='2.2.0',
-    packages=['TonTools', 'TonTools/Contracts', 'TonTools/Providers'],
+    packages=['TonTools', 'TonTools/Contracts', 'TonTools/Providers', 'TonTools/Enums'],
     url='',
     license='MIT License',
     author='yungwine',
