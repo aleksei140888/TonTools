@@ -124,7 +124,8 @@ class TonApiClient:
                 response = await session.get(url=url, params=params, headers=self.headers)
                 response = await process_response(response)
                 transactions.extend(response['transactions'])
-                before_lt = transactions[-1]['lt']
+                if transactions:
+                    before_lt = transactions[-1]['lt']
                 if len(response['transactions']) < limit_per_one_request:
                     break
             result = []
