@@ -55,18 +55,29 @@ class SafeLsClient:
         self.ls_client.ls_index = self.ls_index
         await self.ls_client.init()
 
-    async def _execute(self, method: str, *args):
+    async def _run_method(self, client, method, args, kwargs):
+        method = getattr(client, method)
+        params = inspect.signature(method).parameters
+        args = args[:len(params)]
+        kwargs = {k: v for k, v in kwargs.items() if k in params}
+        return await method(*args, **kwargs)
+
+    async def _execute(self, _method: str, *args, **kwargs):
         try:
             if self._next_ls:
                 self._next_ls = False
                 await self.next_ls()
-            return await getattr(self.ls_client, method)(*args)
+            return await self._run_method(self.ls_client, _method, args, kwargs)
         except Exception as e:
-            logging.warning(f'Error in {method}: {e}\nTrying the fallback client and switching to another LS for the next request')
+            logging.warning(f'Error in {_method}: {e}\nTrying the fallback client and switching to another LS for the next request')
             self._next_ls = True
-            method = getattr(self.fallback, method)
-            argc = len(inspect.signature(method).parameters)
-            return await method(*args[:argc])
+            return await self._run_method(self.fallback, _method, args, kwargs)
+
+    def _process_address(self, address):
+        return self.ls_client._process_address(address)
+
+    async def run_get_method(self, method: str, address: str, stack: list):
+        return await self._execute(self.run_get_method.__name__, method=method, address=address, stack=stack)
 
     async def get_nft_owner(self, nft_address: str):
         return await self._execute(self.get_nft_owner.__name__, nft_address)
