@@ -231,7 +231,7 @@ class LsClient(TonlibClient):
             result.append(NftItem(self._process_address(read_address(Cell.one_from_boc(base64.b64decode(data[0].cell.bytes)))), self))
         return result
 
-    async def get_transactions(self, address: str, limit: int = 10**9):
+    async def get_transactions(self, address: str, limit: int = 10**9, limit_per_one_request: int = 100):
         account = await self.find_account(address)
         # ton lib method does all the work of getting the required tx amount in a loop
         transactions = map(lambda x: x.to_json(), await account.get_transactions(limit=limit))
