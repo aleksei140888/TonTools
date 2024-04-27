@@ -97,6 +97,9 @@ class SafeLsClient:
     async def get_jetton_data(self, jetton_master_address: str):
         return await self._execute(self.get_jetton_data.__name__, jetton_master_address)
 
+    async def send_boc(self, boc):
+        return await self._execute(self.send_boc.__name__, boc)
+
     async def get_wallet_seqno(self, address: str):
         return await self._execute(self.get_wallet_seqno.__name__, address)
 
