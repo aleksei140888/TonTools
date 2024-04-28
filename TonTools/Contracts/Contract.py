@@ -115,7 +115,7 @@ class Transaction:
                 'value': int(self.in_msg.value) / 10**9,
                 'from': self.in_msg.source,
                 'to': self.in_msg.destination,
-                'comment': self.in_msg.msg_data if 'te6' not in self.in_msg.msg_data else ''
+                'comment': self.in_msg.msg_data if 'te6' not in (self.in_msg.msg_data or ()) else ''
             }
         else:
             return {
@@ -126,7 +126,7 @@ class Transaction:
                 'value': int(self.out_msgs[0].value) / 10**9 if len(self.out_msgs) == 1 else [int(out_msg.value) / 10**9 for out_msg in self.out_msgs],
                 'from': self.out_msgs[0].source,
                 'to': self.out_msgs[0].destination if len(self.out_msgs) == 1 else [out_msg.destination for out_msg in self.out_msgs],
-                'comment': (self.out_msgs[0].msg_data if 'te6' not in self.out_msgs[0].msg_data else '') if len(self.out_msgs) == 1 else [out_msg.msg_data if 'te6' not in out_msg.msg_data else '' for out_msg in self.out_msgs],
+                'comment': (self.out_msgs[0].msg_data if 'te6' not in (self.out_msgs[0].msg_data or ()) else '') if len(self.out_msgs) == 1 else [out_msg.msg_data if 'te6' not in (out_msg.msg_data or ()) else '' for out_msg in self.out_msgs],
             }
 
     def __str__(self):
