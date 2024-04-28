@@ -83,7 +83,7 @@ client = DtonClient(
 
 ### TonApiClient v2
 
-[TonApi](https://tonapi.io/swagger-ui) is a high level indexing Api. 
+[TonApi](https://tonapi.io/api-v2) is a high level indexing Api. 
 
 To initialize TonApiClient: 
 ```python
