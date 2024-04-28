@@ -134,6 +134,8 @@ class TonApiClient:
                 tr['status'] = tr['success']
                 tr['fee'] = tr['total_fees']
                 tr['hash'] = base64.b64encode(s=bytearray.fromhex(tr['hash'])).decode()
+                tr['in_msg']['msg_data'] = tr['in_msg']['decoded_body'] if 'decoded_body' in tr['in_msg'] else None
+                tr['in_msg']['msg_data_hex'] = tr['in_msg']['raw_body'] if 'raw_body' in tr['in_msg'] else None
                 tr['in_msg']['source'] = self._process_address(tr['in_msg']['source']['address']) if 'source' in tr['in_msg'] else ''
                 tr['in_msg']['destination'] = self._process_address(tr['in_msg']['destination']['address']) if 'destination' in tr['in_msg'] else ''
                 out_msgs = tr['out_msgs']

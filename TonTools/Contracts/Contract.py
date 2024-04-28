@@ -36,12 +36,12 @@ class Msg:
         self.destination = data['destination']
         self.value = data['value']
         if data.get('msg_data') is None:
-            self.msg_data = None
+            self.msg_data = base64.b64encode(bytes.fromhex(data['msg_data_hex'])).decode() if 'msg_data_hex' in data else None
         else:
-            if not is_boc(data['msg_data']):
-                self.msg_data = base64.b64decode(data['msg_data']).decode().split('\x00')[-1]
-            else:
+            if isinstance(data['msg_data'], dict) or is_boc(data['msg_data']):
                 self.msg_data = data['msg_data']
+            else:
+                self.msg_data = base64.b64decode(data['msg_data']).decode().split('\x00')[-1]
         self.op_code = self.try_get_op() if 'op_code' not in data else data['op_code']
 
     def try_detect_type(self):
