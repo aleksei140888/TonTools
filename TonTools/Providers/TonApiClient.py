@@ -138,10 +138,12 @@ class TonApiClient:
                 tr['in_msg']['msg_data_hex'] = tr['in_msg']['raw_body'] if 'raw_body' in tr['in_msg'] else None
                 tr['in_msg']['source'] = self._process_address(tr['in_msg']['source']['address']) if 'source' in tr['in_msg'] else ''
                 tr['in_msg']['destination'] = self._process_address(tr['in_msg']['destination']['address']) if 'destination' in tr['in_msg'] else ''
+                tr['in_msg']['op_code'] = tr['in_msg']['op_code'].replace('0x', '') if 'op_code' in tr['in_msg'] else ''
                 out_msgs = tr['out_msgs']
                 for out_msg in out_msgs:
                     out_msg['source'] = self._process_address(out_msg['source']['address']) if 'source' in out_msg else ''
                     out_msg['destination'] = self._process_address(out_msg['destination']['address']) if 'destination' in out_msg else ''
+                    out_msg['op_code'] = out_msg['op_code'].replace('0x', '') if 'op_code' in out_msg else ''
                 tr['out_msgs'] = out_msgs
                 result.append(Transaction(tr))
             return result[:limit]

@@ -45,8 +45,7 @@ class Msg:
         self.op_code = self.try_get_op() if 'op_code' not in data else data['op_code']
 
     def try_detect_type(self):
-        op = self.try_get_op()
-        return known_prefixes.get(op)
+        return known_prefixes.get(self.op_code)
 
     def try_get_op(self):
         if not self.msg_data:
