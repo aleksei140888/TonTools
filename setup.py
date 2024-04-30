@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 requirements = [
     "setuptools>=69.5",
@@ -13,7 +13,8 @@ requirements = [
 setup(
     name='TonTools',
     version='2.2.0',
-    packages=['TonTools', 'TonTools/Contracts', 'TonTools/Providers', 'TonTools/Enums'],
+    packages=find_packages(),
+    include_package_data=True,
     url='',
     license='MIT License',
     author='yungwine',
