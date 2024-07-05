@@ -12,7 +12,7 @@ requirements = [
 
 setup(
     name='TonTools',
-    version='2.2.0',
+    version='2.2.1',
     packages=find_packages(),
     include_package_data=True,
     url='',
