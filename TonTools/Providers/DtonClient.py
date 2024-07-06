@@ -21,10 +21,10 @@ class DtonError(BaseException):
 
 async def process_response(response: aiohttp.ClientResponse):
     try:
-        response_dict = await response.json()
+        response_dict: dict = await response.json()
     except Exception:
         raise DtonError(f'Failed to parse response: {response.text}')
-    if 'errors' in response_dict.keys():
+    if response_dict.get('errors'):
         logging.warning(f"DTon return errors: {response_dict['errors']}")
     return response_dict
 
